@@ -63,7 +63,8 @@ except ImportError:
 
 
 # little danse to see if np.copy has an 'order' keyword argument
-if 'order' in inspect.getargspec(np.copy)[0]:
+# Fix for 5281
+if 'order' in inspect.signature(np.copy).parameters:
     def safe_copy(X):
         # Copy, but keep the order
         return np.copy(X, order='K')
@@ -354,8 +355,7 @@ if np_version < (1, 6, 2):
 else:
     from numpy import bincount
 
-
-if 'exist_ok' in inspect.getargspec(os.makedirs).args:
+if 'exist_ok' in inspect.signature(os.makedirs).parameters:
     makedirs = os.makedirs
 else:
     def makedirs(name, mode=0o777, exist_ok=False):

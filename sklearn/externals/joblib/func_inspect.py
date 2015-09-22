@@ -188,7 +188,7 @@ def filter_args(func, ignore_lst, args=(), kwargs=dict()):
             warnings.warn('Cannot inspect object %s, ignore list will '
                 'not work.' % func, stacklevel=2)
         return {'*': args, '**': kwargs}
-    arg_spec = inspect.getargspec(func)
+    arg_spec = inspect.signature(func).parameters
     # We need to if/them to account for different versions of Python
     if hasattr(arg_spec, 'args'):
         arg_names = arg_spec.args
