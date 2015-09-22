@@ -153,7 +153,7 @@ class CalibratedClassifierCV(BaseEstimator, ClassifierMixin):
             self.calibrated_classifiers_.append(calibrated_classifier)
         else:
             cv = check_cv(self.cv, X, y, classifier=True)
-            arg_names = inspect.getargspec(base_estimator.fit)[0]
+            arg_names = inspect.signature(base_estimator.fit).parameters
             estimator_name = type(base_estimator).__name__
             if (sample_weight is not None
                     and "sample_weight" not in arg_names):
